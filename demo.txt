@@ -1,1 +1,738 @@
 icebns
+简介
+cmder是一个增强型命令行工具，不仅可以使用windows下的所有命令，更爽的是可以使用linux的命令,shell命令。
+
+下载
+官网地址：http://cmder.net/
+
+clipboard.png
+
+下载的时候，会有两个版本，分别是mini与full版；唯一的差别在于有没有内建msysgit工具，这是Git for Windows的标准配备；全安装版 cmder 自带了 msysgit, 压缩包 23M, 除了 git 本身这个命令之外, 里面可以使用大量的 linux 命令；比如 grep, curl(没有 wget)； 像vim, grep, tar, unzip, ssh, ls, bash, perl 对于爱折腾的Coder更是痛点需求。
+
+安装
+直接解压到某个目录就可以了，点击Cmder.exe运行。
+
+clipboard.png
+
+配置环境变量
+在系统变量添加
+
+变量名： CMDER_HOME
+变量值： 安装绝对路径
+clipboard.png
+
+最后在Path添加一条斜体文字
+%CMDER_HOME%
+
+clipboard.png
+
+添加 cmder 到右键菜单
+配置环境变量后，在管理员权限的终端输入以下语句。
+Win8或者Win10可以直接 win+x 再按 a 键进入。
+
+Cmder.exe /REGISTER ALL
+clipboard.png
+
+配置好后，任意文件夹右键
+
+clipboard.png
+
+新标签打开个管理员权限终端
+快捷键 Ctrl + t 后勾选
+
+clipboard.png
+
+clipboard.png
+
+设置
+快捷键：win + alt + p
+或者在右下角图标，右击
+
+clipboard.png
+
+设置bash作为默认开启的选项
+clipboard.png
+
+解决中文乱码问题
+之前在网找了好多方法，可是都解决不了，很多人在在Environment里添加set LANG=zh_CN.UTF-8来解决中文乱码的问题，可是我用这个方法并没有成功，可能是环境的原因吧，我的系统是win10的。
+最后找到解决办法：
+Settings->Startup->Environment 添加
+set LANG=zh_CN.UTF-8
+set LC_ALL=zh_CN.utf8
+
+clipboard.png
+
+重启Cmder，发现使用ls，中文正确显示了。
+
+clipboard.png
+
+更改背景
+clipboard.png
+
+更换主题
+内置了几款不错的主题，当然如果你觉得不合适，当然也支持自己设定。
+
+clipboard.png
+
+常用功能介绍
+clipboard.png
+
+如上图示编号的部分说明如下：
+
+1, Cmder常用快捷键
+
+利用Tab，自动路径补全；
+利用Ctrl+T建立新页签；利用Ctrl+W关闭页签;
+利用Ctrl+Tab切换页签;
+Alt+F4：关闭所有页签
+Alt+Shift+1：开启cmd.exe
+Alt+Shift+2：开启powershell.exe
+Alt+Shift+3：开启powershell.exe (系统管理员权限)
+Ctrl+1：快速切换到第1个页签
+Ctrl+n：快速切换到第n个页签( n值无上限)
+Alt + enter： 切换到全屏状态；
+Ctr+r 历史命令搜索
+2, 可在视窗内搜寻画面上出现过的任意关键字。
+
+3, 新增页签按钮。
+
+4, 切换页签按钮。
+
+5, 锁定视窗，让视窗无法再输入。
+
+6, 切换视窗是否提供卷轴功能，启动时可查询之前显示过的内容。
+
+7, 按下滑鼠左键可开启系统选单，滑鼠右键可开启工具选项视窗。 Win+Alt+P ：开启工具选项视窗。
+
+
+新浪微博微信TwitterFacebook
+
+ 
+你可能感兴趣的
+cmder使用简介xinmingducmdcmder
+新鲜热乎的2017年Windows前端开发环境安装配置freedogsublime-textyarnvue.js前端windows
+lua源码在windows下的编译，以及添加新的c\c++模块silvercoreluawindowsdll编译
+Windows Containers 大冒险: 装备追寻云的痕迹容器windowscontainer容器技术
+前端小菜鸟的 windows 开发配置一颗板栗sublime-textwindows
+常用的dos命令Mshuwindows
+FastDelete-Windows下快速删除文件夹的工具itvincentwindowsnode.js
+前端资源系列（1）-Git常用命令&设置快捷命令&小工作流xzavier快捷键资源工具
+15 条评论
+
+JackZhouMine · 2017年12月02日
+博主，他的命令和win自带的完全一样的吗？ 怎么用更加高效呢？
+
+ 赞 回复
+
+JackZhouMine · 2017年12月02日
+cmder here 不生效。。
+
+ 赞 回复
+不知道你怎么装的，我最近都重装两次cmder了，都是按照文章这样装的，cmder here没问题啊
+
+— memor 作者 · 2017年12月03日
+设置cmder her需要在以管理员身份运行win自带的cmd里设置。
+
+— JackZhouMine · 2017年12月04日
+参考：https://segmentfault.com/q/10...
+
+— SHERlocked93 · 2018年09月26日
+添加回复 | 显示更多
+
+2013乔帮主 · 2017年12月24日
+感谢楼主，我按照你这个流程试了下，蛮不错的，都可以！
+
+ 赞 回复
+
+当然我没扯淡 · 2018年03月27日
+环境变量配置是怎么让字体倾斜啊。
+
+ 赞 回复
+
+函丹114 · 2018年04月08日
+Generating clink initial settings in "C:UsersTTDownloadscmder (1)configsettings"
+Additional *.lua files in "C:UsersTTDownloadscmder (1)config" are loaded on startup.楼主你好，我这个 是什么情况呢
+
+ 赞 回复
+应该是你阻止了操作，关掉一些安全软件 如360 ，再次打开应该就可以了
+
+— 在路上f_x · 4月9日
+添加回复
+
+hdr · 2018年04月20日
+求教，背景半透明如何取消？
+
+ 赞 回复
+
+雪飞花1991 · 2018年09月07日
+已经依据大神配置好，爽歪歪
+
+ 赞 回复
+
+PLAxiaoxin · 2018年11月12日
+我这边改成这样Cmder.exe /register ALL 才行
+
+ 赞 回复
+
+heboliufengjie · 3月5日
+谢谢，按照配置
+
+ 赞 回复
+
+zuzeep · 8月7日
+怕麻烦的同学可以直接下载一个scoop， 然后直接用scoop install cmder直接下载安装。
+不用配置环境也不用设置中文。
+
+ 赞 回复简介
+cmder是一个增强型命令行工具，不仅可以使用windows下的所有命令，更爽的是可以使用linux的命令,shell命令。
+
+下载
+官网地址：http://cmder.net/
+
+clipboard.png
+
+下载的时候，会有两个版本，分别是mini与full版；唯一的差别在于有没有内建msysgit工具，这是Git for Windows的标准配备；全安装版 cmder 自带了 msysgit, 压缩包 23M, 除了 git 本身这个命令之外, 里面可以使用大量的 linux 命令；比如 grep, curl(没有 wget)； 像vim, grep, tar, unzip, ssh, ls, bash, perl 对于爱折腾的Coder更是痛点需求。
+
+安装
+直接解压到某个目录就可以了，点击Cmder.exe运行。
+
+clipboard.png
+
+配置环境变量
+在系统变量添加
+
+变量名： CMDER_HOME
+变量值： 安装绝对路径
+clipboard.png
+
+最后在Path添加一条斜体文字
+%CMDER_HOME%
+
+clipboard.png
+
+添加 cmder 到右键菜单
+配置环境变量后，在管理员权限的终端输入以下语句。
+Win8或者Win10可以直接 win+x 再按 a 键进入。
+
+Cmder.exe /REGISTER ALL
+clipboard.png
+
+配置好后，任意文件夹右键
+
+clipboard.png
+
+新标签打开个管理员权限终端
+快捷键 Ctrl + t 后勾选
+
+clipboard.png
+
+clipboard.png
+
+设置
+快捷键：win + alt + p
+或者在右下角图标，右击
+
+clipboard.png
+
+设置bash作为默认开启的选项
+clipboard.png
+
+解决中文乱码问题
+之前在网找了好多方法，可是都解决不了，很多人在在Environment里添加set LANG=zh_CN.UTF-8来解决中文乱码的问题，可是我用这个方法并没有成功，可能是环境的原因吧，我的系统是win10的。
+最后找到解决办法：
+Settings->Startup->Environment 添加
+set LANG=zh_CN.UTF-8
+set LC_ALL=zh_CN.utf8
+
+clipboard.png
+
+重启Cmder，发现使用ls，中文正确显示了。
+
+clipboard.png
+
+更改背景
+clipboard.png
+
+更换主题
+内置了几款不错的主题，当然如果你觉得不合适，当然也支持自己设定。
+
+clipboard.png
+
+常用功能介绍
+clipboard.png
+
+如上图示编号的部分说明如下：
+
+1, Cmder常用快捷键
+
+利用Tab，自动路径补全；
+利用Ctrl+T建立新页签；利用Ctrl+W关闭页签;
+利用Ctrl+Tab切换页签;
+Alt+F4：关闭所有页签
+Alt+Shift+1：开启cmd.exe
+Alt+Shift+2：开启powershell.exe
+Alt+Shift+3：开启powershell.exe (系统管理员权限)
+Ctrl+1：快速切换到第1个页签
+Ctrl+n：快速切换到第n个页签( n值无上限)
+Alt + enter： 切换到全屏状态；
+Ctr+r 历史命令搜索
+2, 可在视窗内搜寻画面上出现过的任意关键字。
+
+3, 新增页签按钮。
+
+4, 切换页签按钮。
+
+5, 锁定视窗，让视窗无法再输入。
+
+6, 切换视窗是否提供卷轴功能，启动时可查询之前显示过的内容。
+
+7, 按下滑鼠左键可开启系统选单，滑鼠右键可开启工具选项视窗。 Win+Alt+P ：开启工具选项视窗。
+
+
+新浪微博微信TwitterFacebook
+
+ 
+你可能感兴趣的
+cmder使用简介xinmingducmdcmder
+新鲜热乎的2017年Windows前端开发环境安装配置freedogsublime-textyarnvue.js前端windows
+lua源码在windows下的编译，以及添加新的c\c++模块silvercoreluawindowsdll编译
+Windows Containers 大冒险: 装备追寻云的痕迹容器windowscontainer容器技术
+前端小菜鸟的 windows 开发配置一颗板栗sublime-textwindows
+常用的dos命令Mshuwindows
+FastDelete-Windows下快速删除文件夹的工具itvincentwindowsnode.js
+前端资源系列（1）-Git常用命令&设置快捷命令&小工作流xzavier快捷键资源工具
+15 条评论
+
+JackZhouMine · 2017年12月02日
+博主，他的命令和win自带的完全一样的吗？ 怎么用更加高效呢？
+
+ 赞 回复
+
+JackZhouMine · 2017年12月02日
+cmder here 不生效。。
+
+ 赞 回复
+不知道你怎么装的，我最近都重装两次cmder了，都是按照文章这样装的，cmder here没问题啊
+
+— memor 作者 · 2017年12月03日
+设置cmder her需要在以管理员身份运行win自带的cmd里设置。
+
+— JackZhouMine · 2017年12月04日
+参考：https://segmentfault.com/q/10...
+
+— SHERlocked93 · 2018年09月26日
+添加回复 | 显示更多
+
+2013乔帮主 · 2017年12月24日
+感谢楼主，我按照你这个流程试了下，蛮不错的，都可以！
+
+ 赞 回复
+
+当然我没扯淡 · 2018年03月27日
+环境变量配置是怎么让字体倾斜啊。
+
+ 赞 回复
+
+函丹114 · 2018年04月08日
+Generating clink initial settings in "C:UsersTTDownloadscmder (1)configsettings"
+Additional *.lua files in "C:UsersTTDownloadscmder (1)config" are loaded on startup.楼主你好，我这个 是什么情况呢
+
+ 赞 回复
+应该是你阻止了操作，关掉一些安全软件 如360 ，再次打开应该就可以了
+
+— 在路上f_x · 4月9日
+添加回复
+
+hdr · 2018年04月20日
+求教，背景半透明如何取消？
+
+ 赞 回复
+
+雪飞花1991 · 2018年09月07日
+已经依据大神配置好，爽歪歪
+
+ 赞 回复
+
+PLAxiaoxin · 2018年11月12日
+我这边改成这样Cmder.exe /register ALL 才行
+
+ 赞 回复
+
+heboliufengjie · 3月5日
+谢谢，按照配置
+
+ 赞 回复
+
+zuzeep · 8月7日
+怕麻烦的同学可以直接下载一个scoop， 然后直接用scoop install cmder直接下载安装。
+不用配置环境也不用设置中文。
+
+ 赞 回复简介
+cmder是一个增强型命令行工具，不仅可以使用windows下的所有命令，更爽的是可以使用linux的命令,shell命令。
+
+下载
+官网地址：http://cmder.net/
+
+clipboard.png
+
+下载的时候，会有两个版本，分别是mini与full版；唯一的差别在于有没有内建msysgit工具，这是Git for Windows的标准配备；全安装版 cmder 自带了 msysgit, 压缩包 23M, 除了 git 本身这个命令之外, 里面可以使用大量的 linux 命令；比如 grep, curl(没有 wget)； 像vim, grep, tar, unzip, ssh, ls, bash, perl 对于爱折腾的Coder更是痛点需求。
+
+安装
+直接解压到某个目录就可以了，点击Cmder.exe运行。
+
+clipboard.png
+
+配置环境变量
+在系统变量添加
+
+变量名： CMDER_HOME
+变量值： 安装绝对路径
+clipboard.png
+
+最后在Path添加一条斜体文字
+%CMDER_HOME%
+
+clipboard.png
+
+添加 cmder 到右键菜单
+配置环境变量后，在管理员权限的终端输入以下语句。
+Win8或者Win10可以直接 win+x 再按 a 键进入。
+
+Cmder.exe /REGISTER ALL
+clipboard.png
+
+配置好后，任意文件夹右键
+
+clipboard.png
+
+新标签打开个管理员权限终端
+快捷键 Ctrl + t 后勾选
+
+clipboard.png
+
+clipboard.png
+
+设置
+快捷键：win + alt + p
+或者在右下角图标，右击
+
+clipboard.png
+
+设置bash作为默认开启的选项
+clipboard.png
+
+解决中文乱码问题
+之前在网找了好多方法，可是都解决不了，很多人在在Environment里添加set LANG=zh_CN.UTF-8来解决中文乱码的问题，可是我用这个方法并没有成功，可能是环境的原因吧，我的系统是win10的。
+最后找到解决办法：
+Settings->Startup->Environment 添加
+set LANG=zh_CN.UTF-8
+set LC_ALL=zh_CN.utf8
+
+clipboard.png
+
+重启Cmder，发现使用ls，中文正确显示了。
+
+clipboard.png
+
+更改背景
+clipboard.png
+
+更换主题
+内置了几款不错的主题，当然如果你觉得不合适，当然也支持自己设定。
+
+clipboard.png
+
+常用功能介绍
+clipboard.png
+
+如上图示编号的部分说明如下：
+
+1, Cmder常用快捷键
+
+利用Tab，自动路径补全；
+利用Ctrl+T建立新页签；利用Ctrl+W关闭页签;
+利用Ctrl+Tab切换页签;
+Alt+F4：关闭所有页签
+Alt+Shift+1：开启cmd.exe
+Alt+Shift+2：开启powershell.exe
+Alt+Shift+3：开启powershell.exe (系统管理员权限)
+Ctrl+1：快速切换到第1个页签
+Ctrl+n：快速切换到第n个页签( n值无上限)
+Alt + enter： 切换到全屏状态；
+Ctr+r 历史命令搜索
+2, 可在视窗内搜寻画面上出现过的任意关键字。
+
+3, 新增页签按钮。
+
+4, 切换页签按钮。
+
+5, 锁定视窗，让视窗无法再输入。
+
+6, 切换视窗是否提供卷轴功能，启动时可查询之前显示过的内容。
+
+7, 按下滑鼠左键可开启系统选单，滑鼠右键可开启工具选项视窗。 Win+Alt+P ：开启工具选项视窗。
+
+
+新浪微博微信TwitterFacebook
+
+ 
+你可能感兴趣的
+cmder使用简介xinmingducmdcmder
+新鲜热乎的2017年Windows前端开发环境安装配置freedogsublime-textyarnvue.js前端windows
+lua源码在windows下的编译，以及添加新的c\c++模块silvercoreluawindowsdll编译
+Windows Containers 大冒险: 装备追寻云的痕迹容器windowscontainer容器技术
+前端小菜鸟的 windows 开发配置一颗板栗sublime-textwindows
+常用的dos命令Mshuwindows
+FastDelete-Windows下快速删除文件夹的工具itvincentwindowsnode.js
+前端资源系列（1）-Git常用命令&设置快捷命令&小工作流xzavier快捷键资源工具
+15 条评论
+
+JackZhouMine · 2017年12月02日
+博主，他的命令和win自带的完全一样的吗？ 怎么用更加高效呢？
+
+ 赞 回复
+
+JackZhouMine · 2017年12月02日
+cmder here 不生效。。
+
+ 赞 回复
+不知道你怎么装的，我最近都重装两次cmder了，都是按照文章这样装的，cmder here没问题啊
+
+— memor 作者 · 2017年12月03日
+设置cmder her需要在以管理员身份运行win自带的cmd里设置。
+
+— JackZhouMine · 2017年12月04日
+参考：https://segmentfault.com/q/10...
+
+— SHERlocked93 · 2018年09月26日
+添加回复 | 显示更多
+
+2013乔帮主 · 2017年12月24日
+感谢楼主，我按照你这个流程试了下，蛮不错的，都可以！
+
+ 赞 回复
+
+当然我没扯淡 · 2018年03月27日
+环境变量配置是怎么让字体倾斜啊。
+
+ 赞 回复
+
+函丹114 · 2018年04月08日
+Generating clink initial settings in "C:UsersTTDownloadscmder (1)configsettings"
+Additional *.lua files in "C:UsersTTDownloadscmder (1)config" are loaded on startup.楼主你好，我这个 是什么情况呢
+
+ 赞 回复
+应该是你阻止了操作，关掉一些安全软件 如360 ，再次打开应该就可以了
+
+— 在路上f_x · 4月9日
+添加回复
+
+hdr · 2018年04月20日
+求教，背景半透明如何取消？
+
+ 赞 回复
+
+雪飞花1991 · 2018年09月07日
+已经依据大神配置好，爽歪歪
+
+ 赞 回复
+
+PLAxiaoxin · 2018年11月12日
+我这边改成这样Cmder.exe /register ALL 才行
+
+ 赞 回复
+
+heboliufengjie · 3月5日
+谢谢，按照配置
+
+ 赞 回复
+
+zuzeep · 8月7日
+怕麻烦的同学可以直接下载一个scoop， 然后直接用scoop install cmder直接下载安装。
+不用配置环境也不用设置中文。
+
+ 赞 回复简介
+cmder是一个增强型命令行工具，不仅可以使用windows下的所有命令，更爽的是可以使用linux的命令,shell命令。
+
+下载
+官网地址：http://cmder.net/
+
+clipboard.png
+
+下载的时候，会有两个版本，分别是mini与full版；唯一的差别在于有没有内建msysgit工具，这是Git for Windows的标准配备；全安装版 cmder 自带了 msysgit, 压缩包 23M, 除了 git 本身这个命令之外, 里面可以使用大量的 linux 命令；比如 grep, curl(没有 wget)； 像vim, grep, tar, unzip, ssh, ls, bash, perl 对于爱折腾的Coder更是痛点需求。
+
+安装
+直接解压到某个目录就可以了，点击Cmder.exe运行。
+
+clipboard.png
+
+配置环境变量
+在系统变量添加
+
+变量名： CMDER_HOME
+变量值： 安装绝对路径
+clipboard.png
+
+最后在Path添加一条斜体文字
+%CMDER_HOME%
+
+clipboard.png
+
+添加 cmder 到右键菜单
+配置环境变量后，在管理员权限的终端输入以下语句。
+Win8或者Win10可以直接 win+x 再按 a 键进入。
+
+Cmder.exe /REGISTER ALL
+clipboard.png
+
+配置好后，任意文件夹右键
+
+clipboard.png
+
+新标签打开个管理员权限终端
+快捷键 Ctrl + t 后勾选
+
+clipboard.png
+
+clipboard.png
+
+设置
+快捷键：win + alt + p
+或者在右下角图标，右击
+
+clipboard.png
+
+设置bash作为默认开启的选项
+clipboard.png
+
+解决中文乱码问题
+之前在网找了好多方法，可是都解决不了，很多人在在Environment里添加set LANG=zh_CN.UTF-8来解决中文乱码的问题，可是我用这个方法并没有成功，可能是环境的原因吧，我的系统是win10的。
+最后找到解决办法：
+Settings->Startup->Environment 添加
+set LANG=zh_CN.UTF-8
+set LC_ALL=zh_CN.utf8
+
+clipboard.png
+
+重启Cmder，发现使用ls，中文正确显示了。
+
+clipboard.png
+
+更改背景
+clipboard.png
+
+更换主题
+内置了几款不错的主题，当然如果你觉得不合适，当然也支持自己设定。
+
+clipboard.png
+
+常用功能介绍
+clipboard.png
+
+如上图示编号的部分说明如下：
+
+1, Cmder常用快捷键
+
+利用Tab，自动路径补全；
+利用Ctrl+T建立新页签；利用Ctrl+W关闭页签;
+利用Ctrl+Tab切换页签;
+Alt+F4：关闭所有页签
+Alt+Shift+1：开启cmd.exe
+Alt+Shift+2：开启powershell.exe
+Alt+Shift+3：开启powershell.exe (系统管理员权限)
+Ctrl+1：快速切换到第1个页签
+Ctrl+n：快速切换到第n个页签( n值无上限)
+Alt + enter： 切换到全屏状态；
+Ctr+r 历史命令搜索
+2, 可在视窗内搜寻画面上出现过的任意关键字。
+
+3, 新增页签按钮。
+
+4, 切换页签按钮。
+
+5, 锁定视窗，让视窗无法再输入。
+
+6, 切换视窗是否提供卷轴功能，启动时可查询之前显示过的内容。
+
+7, 按下滑鼠左键可开启系统选单，滑鼠右键可开启工具选项视窗。 Win+Alt+P ：开启工具选项视窗。
+
+
+新浪微博微信TwitterFacebook
+
+ 
+你可能感兴趣的
+cmder使用简介xinmingducmdcmder
+新鲜热乎的2017年Windows前端开发环境安装配置freedogsublime-textyarnvue.js前端windows
+lua源码在windows下的编译，以及添加新的c\c++模块silvercoreluawindowsdll编译
+Windows Containers 大冒险: 装备追寻云的痕迹容器windowscontainer容器技术
+前端小菜鸟的 windows 开发配置一颗板栗sublime-textwindows
+常用的dos命令Mshuwindows
+FastDelete-Windows下快速删除文件夹的工具itvincentwindowsnode.js
+前端资源系列（1）-Git常用命令&设置快捷命令&小工作流xzavier快捷键资源工具
+15 条评论
+
+JackZhouMine · 2017年12月02日
+博主，他的命令和win自带的完全一样的吗？ 怎么用更加高效呢？
+
+ 赞 回复
+
+JackZhouMine · 2017年12月02日
+cmder here 不生效。。
+
+ 赞 回复
+不知道你怎么装的，我最近都重装两次cmder了，都是按照文章这样装的，cmder here没问题啊
+
+— memor 作者 · 2017年12月03日
+设置cmder her需要在以管理员身份运行win自带的cmd里设置。
+
+— JackZhouMine · 2017年12月04日
+参考：https://segmentfault.com/q/10...
+
+— SHERlocked93 · 2018年09月26日
+添加回复 | 显示更多
+
+2013乔帮主 · 2017年12月24日
+感谢楼主，我按照你这个流程试了下，蛮不错的，都可以！
+
+ 赞 回复
+
+当然我没扯淡 · 2018年03月27日
+环境变量配置是怎么让字体倾斜啊。
+
+ 赞 回复
+
+函丹114 · 2018年04月08日
+Generating clink initial settings in "C:UsersTTDownloadscmder (1)configsettings"
+Additional *.lua files in "C:UsersTTDownloadscmder (1)config" are loaded on startup.楼主你好，我这个 是什么情况呢
+
+ 赞 回复
+应该是你阻止了操作，关掉一些安全软件 如360 ，再次打开应该就可以了
+
+— 在路上f_x · 4月9日
+添加回复
+
+hdr · 2018年04月20日
+求教，背景半透明如何取消？
+
+ 赞 回复
+
+雪飞花1991 · 2018年09月07日
+已经依据大神配置好，爽歪歪
+
+ 赞 回复
+
+PLAxiaoxin · 2018年11月12日
+我这边改成这样Cmder.exe /register ALL 才行
+
+ 赞 回复
+
+heboliufengjie · 3月5日
+谢谢，按照配置
+
+ 赞 回复
+
+zuzeep · 8月7日
+怕麻烦的同学可以直接下载一个scoop， 然后直接用scoop install cmder直接下载安装。
+不用配置环境也不用设置中文。
+
+ 赞 回复
