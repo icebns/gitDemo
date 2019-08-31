@@ -11,6 +11,14 @@ dev分支：指最近一次分支，当插入dev分支时，head从指向master�
 切换到分支：git checkout dev——cmder的显示会变为dev->origin
 
 联合指令（不好用，不写了）
+在分支编写内容后，切回主分支，在分支状态写的内容不会显示。
+
+将dev内容合并到master上：在主分支状态下输入git merge dev
+此时完成版本同步。
+当不再需要分支时：git branch -d dev
+再次查询当前所在分支：git branch，发现只剩下master了。
 
 
+【解决冲突】
+git checkout -b feature1
 
