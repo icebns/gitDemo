@@ -22,3 +22,4 @@ dev分支：指最近一次分支，当插入dev分支时，head从指向master�
 【解决冲突】
 git checkout -b feature1
 
+git push -u origin master提交云端
