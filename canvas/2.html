@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			 img{
+				 /* width:100%; */
+			 }
+             canvas{
+                 background: #6CF
+             }
+		</style>
+</script>
+	</head>
+	<body>
+		<canvas width="500" height="500"></canvas>
+        <script>
+            let canvas = document.querySelector("canvas");
+            let canCon = canvas.getContext("2d");
+            canCon.fillStyle="red";
+            canCon.strokeStyle="black";
+      
+            canCon.beginPath();
+            // canCon.moveTo(200,150);
+            // canCon.arc(150,150,50,0,Math.PI/3,true);//默认是true，true是顺时针，false是逆时针。
+            canCon.moveTo(200,150);
+            canCon.arcTo(150,100,50,20,30)//30是r
+            canCon.stroke();
+
+            
+        </script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style> 
+             canvas{
+                 background: #6CF
+             }
+		</style>
+</script>
+	</head>
+	<body>
+		<canvas width="500" height="500"></canvas>
+        <script>
+            let canvas = document.querySelector("canvas");
+            let canCon = canvas.getContext("2d");
+
+            let path1 = new Path2D();
+            path1.moveTo(250,250);
+            path1.lineTo(300,250);
+            path1.lineTo(250,300);
+            path1.lineTo(200,250);
+            path1.lineTo(250,250);
+            canCon.strokeStyle="black";
+            canCon.fillStyle="green";
+            canCon.fillRect(0,0,500,500); 
+            
+            canCon.clip(path1);
+            canCon.fillStyle="#fff";
+            canCon.fillRect(0,0,500,500);
+        </script>
+	</body>
+</html>

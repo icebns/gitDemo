@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			 img{
+				 /* width:100%; */
+			 }
+             canvas{
+                 background: #6CF
+             }
+		</style>
+</script>
+	</head>
+	<body>
+		<canvas width="500" height="500"></canvas>
+        <script>
+            let canvas = document.querySelector("canvas");
+            let canCon = canvas.getContext("2d");
+            canCon.fillStyle="red";
+            canCon.strokeStyle="black";
+            canCon.fillRect(200,200,100,100);//实心
+            // canCon.arc(200,200,50,Math.PI*2);
+            canCon.strokeRect(100,100,100,100);
+            canCon.clearRect(200,200,80,50);//清除
+            canCon.beginPath();
+            canCon.moveTo(250,200);
+            canCon.lineTo(300,300);
+            canCon.lineTo(200,300);
+            canCon.closePath();//等于canCon.moveTo(250,200);
+            canCon.stroke();
+
+            
+        </script>
+	</body>
+</html>

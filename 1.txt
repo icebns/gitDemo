@@ -1,0 +1,1038 @@
+//Vue.component('MFEdit', MyFooterEdit);
+var MyFooterEdit={
+    template:`<div>
+				   <li class="lii" @click="edit">
+		 		   <img src="assets/img/edit2.png" height="45" style="position: fixed;right: 28px;top: 150px;z-index:1000;margin-top:50px;" width="45" id="triggerBtn"  title="新建界面元素"/>
+				</li>
+				 <!-- 属性设置模态框（Modal） -->
+		            <div class='am-modal am-modal-confirm am-modal-active' tabindex='-1'
+		            	id="updateuserinfo">
+		            	<div class="am-modal-dialog" style="border-radius:4%;width:850px;margin:5% auto;">
+		            	 <div class="am-modal-hd" style="padding-bottom:15px;font-size:22px;background-color:rgb( 23,65,91);color: white;font-weight: 600;line-height: 1; border-radius: 15px 15px 0 0;font-size:18px;">新建界面元素</div>	
+		            		<div class="am-modal-dialog" style="width:100%;  border-radius: 0 0 15px 15px ;">
+		      		        <form id="updateuserform" class="am-form am-form-horizontal">
+		    				<div class="am-form-group" style="margin-bottom: 1.5rem; ">
+		    				<div class="classification">
+		    				<span class="yuan">选择元素类型:&nbsp;&nbsp;</span>
+		    				<button type="button" class="am-btn am-btn-default am-round am-btn-success" @click="iconat" style="margin-left:50px;outline:none">&nbsp;&nbsp;传感器节点&nbsp;&nbsp;</button>
+		    				<button type="button" class="am-btn am-btn-default am-round am-btn-success" @click="arr" style="margin-left:75px;outline:none">&nbsp;&nbsp;&nbsp;流向箭头&nbsp;&nbsp;&nbsp;</button>
+		                    </div>
+		                    <div id='arrow'>     
+		                 	<div class="am-form-group" style="margin-bottom: 0.5rem">
+							<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">节点样式：</label>
+							<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">
+							<i class="icon-biaojidian1 iconfont"style="margin-left:10px;"></i>
+		                    <i class="icon-biaoji iconfont"style="margin-left:10px;"></i>
+		                    <i class="icon-biaoji1 iconfont"style="margin-left:10px;"></i>
+		                    <i class="icon-biaoji2 iconfont"style="margin-left:10px;"></i>
+		                    <i class="icon-nb- iconfont"style="margin-left:10px;"></i>	</div>
+		                    <div class="am-u-sm-3">&nbsp;</div>
+					    	</div>
+					    	<div class="am-form-group" style="margin-bottom: 0.5rem">
+							<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">节点颜色：</label>
+							<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">
+						    <div class="colorPicker" style="width:150px;height:25px"></div>
+							</div>
+		                    <div class="am-u-sm-3">&nbsp;</div>
+					    	</div>     
+					    	<div class="am-form-group" style="margin-bottom: 0.5rem">
+							<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">节点大小：</label>
+							<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">
+				             <span class="compare"style="font-size:18px; margin-left: 10px;">大</span>
+		                     <span class="compare"style="font-size:14px;margin-left:30px;">中</span>        
+		                     <span class="compare" style="font-size:10px;margin-left:30px;">小</span>       
+					    	</div>  
+					    	<div class="am-u-sm-3">&nbsp;</div>
+		                     </div>
+		         			</div>
+		    				<div class="am-form-group am-text-center"style="margin-bottom: 1.5rem;">
+		    					<div class="am-u-md-3">&nbsp;</div>
+		    					<div class="am-u-md-6" style="margin-top:5%">
+		    						<input type="button" class="am-btn am-btn-primary am-fl" @click="updateusers" value="确定" /> 
+		    						<input type="button" @click="close" id="closek" class="am-btn am-btn-primary am-fr"
+		                				data-am-modal-close value="返回" />
+		    					</div>
+		    					<div class="am-u-md-3">&nbsp;</div>
+		    	
+		    				</div>
+		    				<div id="effect" style="width:200px;height:139px;border:2px solid #0E90D2;
+		            		                  border-radius:20px;margin-top:-234px;margin-right:115px;float:right">
+		            		<span>在此处预览效果：</span>
+		            		<div id="sample" style="margin-top:15%" class="icon-biaoji2 iconfont">
+		            		</div>
+		            		</div>
+		            		</div>
+
+		    			</form>   			
+		            		</div>           		
+		            	</div>
+		            </div>         
+       
+   `,
+
+    methods:{
+        /* 展开属性模态框的样式 */
+        edit:function(){
+            $("#updateuserinfo").css("display","block");
+            /*获取所有class为iconfont的所有元素*/
+            var types =document.getElementsByClassName('iconfont');
+            /*为每个元素增加click事件*/
+            for(var i in types){
+                types[i].onclick=clicktypes;
+            }
+            /* 点击事件，将获取的class传到预览框中*/
+            function clicktypes(){
+                var ability=this.getAttribute('class');
+                document.getElementById('sample').setAttribute('class',ability);
+
+
+            }
+
+            /*点击切换颜色的事件*/
+            $('.colorPicker').ylColor({
+                left: 220,
+                onSelect: function(oCol,elem){
+                    var color = $(oCol).attr('data-color');
+                    $('.colorPicker').css({'background-color':color});
+                    $('#sample').css({'color':color});
+
+
+                }
+            });
+            /*更改icon的大小*/
+            var types =document.getElementsByClassName('iconfont');
+            var iconSize =document.getElementsByClassName('compare');
+            for(var i in iconSize){
+                iconSize[i].onclick=clickSize;
+            }
+            function clickSize(){
+
+                var sizeNature=this.style.fontSize;
+                console.log(sizeNature);
+                document.getElementById('sample').style.fontSize=sizeNature;
+
+            }
+
+
+        },
+        updateusers:function(){
+            var preview=$("#sample").attr('color');
+            $(".nodediv").css('color',preview);
+
+        },
+
+        /*  点击返回关闭模态框 */
+        close:function(){
+            $("#updateuserinfo").hide();
+        },
+
+        /*点击确定颜色盘自动关闭*/
+        updateusers:function(){
+            $("#updateuserinfo").hide();
+            $("#ylColor").hide();
+        },
+
+        /*点击流向箭头切换属性*/
+        arr:function(){
+            var arrow = document.getElementById("arrow");
+            var r=true;
+            if(r==true){
+                arrow.innerHTML = '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">流向箭头样式：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    '<i class="icon-biaoji_ iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-biaojisan iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-jiantouxiangzuo iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-biaoji5 iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-nb- iconfont"style="margin-left:10px;"></i>	</div>'+
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>'+
+                    '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">流向箭头颜色：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    ' <div class="colorPicker" style="width:150px;height:25px"></div>'+
+                    '</div>' +
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>' +
+                    '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">流向箭头大小：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    '<span class="compare"style="font-size:18px; margin-left: 10px;">大</span>'+
+                    '<span class="compare"style="font-size:14px;margin-left:30px;">中</span>'+
+                    '<span class="compare" style="font-size:10px;margin-left:30px;">小</span> '+
+                    '</div>'+
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>'
+            }
+            /*获取所有class为iconfont的所有元素*/
+            var types =document.getElementsByClassName('iconfont');
+            /*为每个元素增加click事件*/
+            for(var i in types){
+                types[i].onclick=clicktypes;
+            }
+            /* 点击事件，将获取的class传到预览框中*/
+            function clicktypes(){
+                var ability=this.getAttribute('class');
+                document.getElementById('sample').setAttribute('class',ability);
+
+
+            }
+
+            /*点击切换颜色的事件*/
+            $('.colorPicker').ylColor({
+                left: 220,
+                onSelect: function(oCol,elem){
+                    var color = $(oCol).attr('data-color');
+                    $('.colorPicker').css({'background-color':color});
+                    $('#sample').css({'color':color});
+
+
+                }
+            });
+            /*更改icon的大小*/
+            var types =document.getElementsByClassName('iconfont');
+            var iconSize =document.getElementsByClassName('compare');
+            for(var i in iconSize){
+                iconSize[i].onclick=clickSize;
+            }
+            function clickSize(){
+
+                var sizeNature=this.style.fontSize;
+                console.log(sizeNature);
+                document.getElementById('sample').style.fontSize=sizeNature;
+
+            }
+        },
+        /*点击icon图标切换属性*/
+        iconat:function(){
+            var arrow = document.getElementById("arrow");
+            var r=true;
+            if(r==true){
+                arrow.innerHTML = '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">节点样式：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    '<i class="icon-biaojidian1 iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-biaoji iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-biaoji1 iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-biaoji2 iconfont"style="margin-left:10px;"></i>'+
+                    '<i class="icon-nb- iconfont"style="margin-left:10px;"></i>	</div>'+
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>'+
+                    '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label" style="padding:0.6em 0.5em 0.5em 0.5em;">节点颜色：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    '<div class="colorPicker" style="width:150px;height:25px"></div>'+
+                    '</div>' +
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>' +
+                    '<div class="am-form-group" style="margin-bottom: 0.5rem">'+
+                    '<label class="am-u-sm-4 am-form-label iconSize" >节点大小：</label>'+
+                    '<div class="am-u-sm-5"style="padding:0.6em 0.5em 0.5em 0.5em;text-align:left;">'+
+                    '<span class="compare compare1">大</span>'+
+                    '<span class="compare compare2">中</span>'+
+                    '<span class="compare compare3">小</span> '+
+                    '</div>'+
+                    '<div class="am-u-sm-3">&nbsp;</div>'+
+                    '</div>'
+            }
+            /*获取所有class为iconfont的所有元素*/
+            var types =document.getElementsByClassName('iconfont');
+            /*为每个元素增加click事件*/
+            for(var i in types){
+                types[i].onclick=clicktypes;
+            }
+            /* 点击事件，将获取的class传到预览框中*/
+            function clicktypes(){
+                var ability=this.getAttribute('class');
+                document.getElementById('sample').setAttribute('class',ability);
+
+
+            }
+
+            /*点击切换颜色的事件*/
+            $('.colorPicker').ylColor({
+                left: 220,
+                onSelect: function(oCol,elem){
+                    var color = $(oCol).attr('data-color');
+                    $('.colorPicker').css({'background-color':color});
+                    $('#sample').css({'color':color});
+
+
+                }
+            });
+            /*更改icon的大小*/
+            var types =document.getElementsByClassName('iconfont');
+            var iconSize =document.getElementsByClassName('compare');
+            for(var i in iconSize){
+                iconSize[i].onclick=clickSize;
+            }
+            function clickSize(){
+
+                var sizeNature=this.style.fontSize;
+                console.log(sizeNature);
+                document.getElementById('sample').style.fontSize=sizeNature;
+
+            }
+        },
+        /*点击节点切换属性*/
+        dot:function(){
+            var arrow = document.getElementById("arrow");
+            var r=true;
+            if(r==true){
+                arrow.innerHTML = '<div id="arrow">'
+            }
+        },
+
+    }
+}
+/***********************************************************************************/
+//Vue.component('MFreplace', MyFooterReplace);
+
+var MyFooterReplace={
+    template:`<div>
+		   <li class="lii"  @click="replace">
+	        <img src="assets/img/picture4.png" style="height:40px;width:40px;position: fixed; right: 30px; top: 150px;z-index:1000;margi-top:60px; font-size:20px;" title="更换背景图片"/>
+          </li>
+        <!-- 更改背景图片-->
+        <div class='am-modal am-modal-confirm am-modal-active' tabindex='-1'
+        	id="updateuserinfoReaple">
+        	<div class="am-modal-dialog" style="border-radius:4%;width:850px;margin:5% auto;">
+        	 <div class="am-modal-hd" style="padding-bottom:25px;font-size:22px;background-color:rgb( 23,65,91);color: white;font-weight: 600;line-height: 1; border-radius: 15px 15px 0 0 ;">更换背景图片</div>
+        		<div class="am-modal-dialog" style="width:100%; border-radius: 0 0 15px 15px ;">
+        		<form id="updateuserform" class="am-form am-form-horizontal">
+				
+        		<div class="am-form-group " style="margin:35px 50px 5px 50px;">
+				<label class="am-u-sm-3 am-form-label  am-form-file">请选择上传图片:
+				    <input id="doc-form-file"  type="file" @change="filechange(this)" multiple>
+				</label>
+				<div class="am-u-sm-9">
+					<input type="text" @click="fileinputs"  id="file"  placeholder="点击选择上传的文件">
+					<img id="imarges" style="display:none">
+				</div>
+			
+			  </div>
+				<p style="font-size:12px;color:red;margin-top:5px;">注：请保证上传图片的宽高比相同，否则已添加的节点的信息将会不准确</p>
+			  <div class="am-form-group am-text-center"
+					style="margin: 3rem;">
+					<div class="am-u-md-3">&nbsp;</div>
+					<div class="am-u-md-6">
+						<input type="button" class="am-btn am-btn-primary am-fl" @click="rprefer()" value="提交" /> 
+						<input type="button" @click="rpback" id="rpback" class="am-btn am-btn-primary am-fr"
+data-am-modal-close value="返回" />
+					</div>
+					<div class="am-u-md-3">&nbsp;</div>
+		
+				
+				</div>
+		        </form>
+        		</div>
+        	</div>
+        </div>
+		</div>   
+   `,
+
+    methods:{
+        /*更换背景图片*/
+        replace:function(){
+            $("#updateuserinfoReaple").css("display","block");
+        },
+
+        /* 点击上传图片的表单*/
+        fileinputs:function(objs){
+            document.getElementById('doc-form-file').click();
+        },
+
+        /*当上传图片的表单的val发生变化时*/
+        filechange:function(){
+            var danns=document.getElementById('doc-form-file').value;
+            $("#file").attr('value',danns);
+            //加载图片获取图片真实宽度和高度
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                //给img标签传递src值
+                $("#imarges").attr("src",this.result);
+                console.log("SRC传值");
+            }
+            reader.readAsDataURL(document.getElementById('doc-form-file').files[0]);
+            var size=document.getElementById('doc-form-file').files[0].size;
+
+
+        },
+        /*  上传图片的提交*/
+        rprefer:function(){
+            var danns=document.getElementById('doc-form-file').value;
+            console.log(danns);
+            /* 刚刚上传的图片的宽高比 */
+            var widthx=$("#imarges").width();
+            var heightx=$("#imarges").height();
+            var  xianProportion=widthx/heightx;
+            /*  页面上现有的宽高比*/
+            var widthy=$("#bgimg").width();
+            var heighty=$("#bgimg").height();
+            var  yuanProportion=widthy/heighty;
+
+            if(danns==""){
+                alert("请选择需要上传的文件");
+            }else if(danns.lastIndexOf(".png") ==-1&&danns.lastIndexOf(".jpg")==-1){
+                alert("图片格式错误");
+            }else if(widthx<600||heightx<400){
+                alert("图片过小，请重新上传");
+            }else if(widthx>4096||heightx>2019){
+                alert("图片过大，请重新上传");
+            }else if(danns.lastIndexOf(".png") >-1||danns.lastIndexOf(".jpg")>-1){
+                console.log("正确")
+                event.preventDefault();
+                let formData = new FormData();
+                formData.append("interfaceName", localStorage.getItem("interfaceName"));
+                formData.append("stationName", localStorage.getItem("stationName"));
+                formData.append("interfaceId", localStorage.getItem("interfaceId"));
+                formData.append("file", document.getElementById('doc-form-file').files[0]);
+                let config = {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    }
+                }
+
+                axios({
+                    url:showcenterip+"/savaWorkinterfaceInformation.json?tokena="+tokena,
+                    method:"post",
+                    data:formData,
+
+                })
+                    .then(function(response){
+                        console.log("程序执行");
+                        localStorage.setItem("backgroundPicUrl",response.data.backgroundPicUrl);
+                        $("#bgimg").attr("src","#");
+                        $("#bgimg").attr("src",showcenterip+response.data.backgroundPicUrl+'?t='+(+new Date()));
+                        //$("#right").empty().load(showcenterip+"/editbackgroundImage.html?tokena="+tokena);
+                    })
+                    .catch(function(response){
+                        console.log('000');
+                    })
+
+
+            }else{
+                alert("加载错误请重试");
+            }
+        },
+
+        /* 更换背景图片的返回按钮*/
+        rpback:function(){
+            $("#updateuserinfoReaple").hide();
+        },
+    }
+}
+/*************************************************************/
+// Vue.component('my-footer', MyFooter);
+
+var MyFooter={
+    template:`<div> 
+            <ul class="ull"> 
+        	<MFreplace></MFreplace>
+        	<MFEdit></MFEdit>
+            <li class="lii">
+                <a id="eye" class="tubiao" @click="showNodes"  style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:100px;" title="点击隐藏/显示数据项目名">
+                    <img src="assets/img/eye.png" width="50" height="50"/>
+           		</a>
+           </li>
+           <li class="lii">
+                <a id="eye" class="tubiao" @click="DelNodes" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:200px;" title="删除节点">
+                    <img src='assets/img/del.png' width="50" height="50" style="padding:2px"/>
+                    
+                    
+           		</a>
+           </li>
+           <li class="lii">
+           	<img src="assets/img/save1.png" height="48" @click="natureSave"  width="48" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:150px;" title="保存" />
+           	<div class="savedown" style="position: fixed;left: 97%;top: 400px;" @click="addSave"></div>
+          <!-- 自动保存弹框-->
+           	<div id="myModal2" class="modal" style="height:0;left:25%;position: fixed;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>自动保存设置</h2>
+                        <span id="closeBtn2" class="close" @click="closeWin">×</span>
+                    </div>
+                    <div class="modal-body">  
+                	<form action="/demo/demo_form.asp">
+					启动/关闭自动保存:
+					&nbsp;启动<input type="radio" checked="checked" name="savee" value="saveon" style="margin-left:3px;"/>
+					&nbsp;关闭<input type="radio" name="savee" value="saveon"  style="margin-left:3px;"/>
+					<br><br>
+					保存间隔时间:
+					<input type="text" name="lastname" value="2" style="border:1px solid #CCC;width:50px;border-radius: 5px;height: 25px;">分钟
+					<br><br>
+					<input type="submit" value="设置" @click="submitSave">
+					</form> 
+					<p>上次保存时间：2019.3.24</p>
+                </div>
+            </div>
+            </div>
+           	</li>
+ 	     </ul> 
+            </div>
+                `,
+    methods:{
+        closeWin:function(e){
+            var modalBox = {};
+            modalBox.modal = document.getElementById("myModal");
+            document.getElementById("myModal2").style.display = "none";
+            modalBox.triggerBtn = document.getElementById("triggerBtn");
+            modalBox.closeBtn = document.getElementById("closeBtn");
+            modalBox.modal.style.display = "none";
+            modalBox.outsideClick = function() {
+                var modal = modalBox.modal;
+                window.onclick = function(event) {
+                    if(event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+        },
+        /*显示隐藏节点名称的函数*/
+        showNodes:function(e){
+            var oNodeName=document.getElementsByClassName('nodename');
+            if(showNot) {
+                /*通过获取数组长度来遍历数组，display属性控制显示隐藏*/
+                for (var i = 0; i < oNodeName.length; i++) {
+                    oNodeName[i].style.display = "inline";
+                }
+                showNot = false;
+            }else{
+                for (var i = 0; i < oNodeName.length; i++) {
+                    oNodeName[i].style.display = "none";
+                }
+                showNot = true;
+            }
+        },
+        /*删除节点函数，开启时不允许新建节点*/
+        DelNodes:function(e){
+            var oNode=document.getElementsByClassName('delnode');
+            if(!delNot) {
+                for (var i = 0; i < oNode.length; i++) {
+                    oNode[i].style.display = "inline";
+                    var a = oNode[i];
+                    /*点击节点时移除DOM元素*/
+                    oNode[i].onclick=function(a){
+                        console.log(a.path[1].id);
+                        document.getElementById("savebox").removeChild(a.path[1]);
+                    }
+                }
+                drawNow = false;
+                delNot = true;
+            }else{
+                for (var i = 0; i <  oNode.length; i++) {
+                    oNode[i].style.display = "none";
+                }
+                delNot = false;
+                drawNow = true;
+            }
+        },
+        /*定时保存模态框*/
+        addSave:function(e){
+            document.getElementById("myModal2").style.display = "inline";
+        },
+        /*保存页面的数据*/
+        natureSave:function(e){
+            event.preventDefault();
+            let formData = new FormData();
+            var dataItem = [];
+
+            var arrdatas = document.getElementsByClassName("nodediv");
+
+            for(var i=0;i<arrdatas.length;i++){
+
+                var natureID = arrdatas[i].getElementsByTagName("span")[0].getAttribute("id");
+                var natureClass = arrdatas[i].getElementsByTagName("span")[0].getAttribute("class");
+                var natureSize = arrdatas[i].getElementsByTagName("span")[0].style.fontSize;
+                var natureColor = arrdatas[i].getElementsByTagName("span")[0].style.color;
+                var natureText = arrdatas[i].getElementsByTagName("p")[0].innerHTML;
+                var natureTextId = arrdatas[i].getElementsByTagName("p")[0].id;
+                console.log(natureID);
+                console.log(natureClass);
+                console.log(natureSize);
+                console.log(natureColor);
+                var nattureTop = arrdatas[i].style.top;
+                console.log(nattureTop);
+                var nattureLeft = arrdatas[i].style.left;
+                console.log(nattureLeft);
+                var ObjectAttribute={}
+                ObjectAttribute.natureID=natureID;
+                ObjectAttribute.natureClass=natureClass
+                ObjectAttribute.natureSize=natureSize;
+                ObjectAttribute.natureColor=natureColor;
+                ObjectAttribute.natureText=natureText;
+                ObjectAttribute.nattureTop=nattureTop;
+                ObjectAttribute.nattureLeft=nattureLeft;
+                ObjectAttribute.natureTextId=natureTextId;
+                dataItem.push(ObjectAttribute);
+            }
+            console.log(dataItem);
+            JSON.stringify( dataItem );
+            var interfaceID=window.interfaceId;
+            console.log(interfaceID);
+            console.log(typeof interfaceID);
+            axios({
+                url:showcenterip+"/saveSensorArr.json?tokena="+tokena,
+                method:"post",
+                data:{
+                    "sensorNode":JSON.stringify(dataItem),
+                    "interfaceId": interfaceID
+                },
+
+            })
+                .then(function(response){
+                    console.log(111);
+                })
+                .catch(function(response){
+                    console.log(0);
+                });
+
+            alert("你已保存成功！");
+        },
+
+        /*定时保存页面的数据*/
+
+        submitSave:function(e){
+            event.preventDefault();
+            let formData = new FormData();
+            var dataItem = [];
+
+            var arrdatas = document.getElementsByClassName("nodediv");
+
+            for(var i=0;i<arrdatas.length;i++){
+
+                var natureID = arrdatas[i].getElementsByTagName("span")[0].getAttribute("id");
+                var natureClass = arrdatas[i].getElementsByTagName("span")[0].getAttribute("class");
+                var natureSize = arrdatas[i].getElementsByTagName("span")[0].style.fontSize;
+                var natureColor = arrdatas[i].getElementsByTagName("span")[0].style.color;
+                var natureText = arrdatas[i].getElementsByTagName("p")[0].innerHTML;
+                var natureTextId = arrdatas[i].getElementsByTagName("p")[0].id;
+                console.log(natureID);
+                console.log(natureClass);
+                console.log(natureSize);
+                console.log(natureColor);
+                var nattureTop = arrdatas[i].style.top;
+                console.log(nattureTop);
+                var nattureLeft = arrdatas[i].style.left;
+                console.log(nattureLeft);
+                var ObjectAttribute={}
+                ObjectAttribute.natureID=natureID;
+                ObjectAttribute.natureClass=natureClass
+                ObjectAttribute.natureSize=natureSize;
+                ObjectAttribute.natureColor=natureColor;
+                ObjectAttribute.natureText=natureText;
+                ObjectAttribute.nattureTop=nattureTop;
+                ObjectAttribute.nattureLeft=nattureLeft;
+                ObjectAttribute.natureTextId=natureTextId;
+                dataItem.push(ObjectAttribute);
+            }
+            console.log(dataItem);
+            JSON.stringify( dataItem );
+            var interfaceID=window.interfaceId;
+            console.log(interfaceID);
+            console.log(typeof interfaceID);
+            axios({
+                url:showcenterip+"/saveSensorArr.json?tokena="+tokena,
+                method:"post",
+                data:{
+                    "sensorNode":JSON.stringify(dataItem),
+                    "interfaceId": interfaceID
+                },
+
+            })
+                .then(function(response){
+                    console.log(111);
+                })
+                .catch(function(response){
+                    console.log(000);
+                })
+
+            $("#myModal2").hide();
+
+            alert("你已开始进行定时保存！");
+
+        },
+
+    }
+}
+/**************************************************/
+//Vue.component('my-header', MyHeader);
+
+/*累加器，赋值节点ID用*/
+var iconnum = 0;
+/*判断是否处于显示节点名称状态。默认为false*/
+var showNot = false;
+/*判断是否处于可删除点状态。默认为false*/
+var delNot  = false;
+/*判断是否处于可画点状态。默认为true*/
+var drawNow = true;
+var MyHeader={
+    template:` 
+                <div>
+                <div id="heightss" style="position:relative">
+                <div id="father" style="position: absolute; left: 50%; top: 50%; position: absolute; transform: translate(-50%, -50%); padding-top: 0px;">
+                <div id="draw" @click="changeIsShow">
+                <img id="bgimg" class="photo" draggable="false" style="z-index:999" >              
+                </div>
+                   <div id="savebox"></div>
+                    	</div>
+                 <img  src="assets/img/keymap1.jpg"  class="photo" style="visibility: hidden; "> 
+              	</div>
+              	<div id="modal" class="modal1" style="display: none;">
+                <div class="modal-content" style="max-width: 950px; width:80%;">
+                    <header class="modal-header">
+                        <h3 style="margin-left: 40%;margin-top:1%; font-size:20px;">请选择数据项目名称</h3>
+                    </header>
+                   <div class="am-modal-dialog" style="width: 100%; padding: 2%;">
+                            <div class="am-form-group am-text-center" id="sensorss">
+                               
+                            </div>
+
+                    </div>
+                   
+                </div>
+              </div>
+               </div>
+                `,
+    components: {
+
+    },
+    data:function(){
+        return {
+            isDisable: false
+        }
+    },
+    mounted(){
+        this.chaneIcon()
+    },
+
+    //在根属性中声明methods属性
+    methods:{
+        chaneIcon:function(){
+            /* 给图片设置宽度 */
+            console.log(window.backgroundPicUrl);
+            var windowWidth=document.body.clientWidth-350;
+            $(".photo").css("width",windowWidth);
+            $(".photo").attr("src",showcenterip+window.backgroundPicUrl);
+            $("#updateuserinfo").css("display","block");
+            var types =document.getElementsByClassName('iconfont');
+            /*为每个元素增加click事件*/
+            for(var i in types){
+                types[i].onclick=clicktypes;
+            }
+            /* 点击事件，将获取的class传到预览框中*/
+            function clicktypes(){
+                var ability=this.getAttribute('class');
+                document.getElementById('sample').setAttribute('class',ability);
+
+
+            }
+
+            /*点击切换颜色的事件*/
+            $('.colorPicker').ylColor({
+                left: 220,
+                onSelect: function(oCol,elem){
+                    var color = $(oCol).attr('data-color');
+                    $('.colorPicker').css({'background-color':color});
+                    $('#sample').css({'color':color});
+
+
+                }
+            });
+            /*更改icon的大小*/
+            var types =document.getElementsByClassName('iconfont');
+            var iconSize =document.getElementsByClassName('compare');
+            for(var i in iconSize){
+                iconSize[i].onclick=clickSize;
+            }
+            function clickSize(){
+
+                var sizeNature=this.style.fontSize;
+                console.log(sizeNature);
+                document.getElementById('sample').style.fontSize=sizeNature;
+
+            }
+
+        },
+        changeIsShow:function(e){
+
+            /*判断是否处于可画点状态*/
+            if(drawNow){
+                var obj=document.getElementById("savebox");
+                var oimg=document.getElementById("bgimg");
+                var bodyoimg=document.getElementById("panal");
+
+                iconnum++;
+                var e = event || window.event;
+                var acX = e.clientX-(bodyoimg.clientWidth-oimg.width)/2-(document.body.clientWidth-bodyoimg.clientWidth);
+                var acY = e.clientY + document.body.scrollTop - 123;
+                var drawX = (acX-5)/oimg.width;
+                var drawY = acY/oimg.height-(37/oimg.height);
+                var drawpX = 1;
+                var drawpY = 7;
+                /*接收节点名称，赋值画点*/
+                var textinput="";
+                axios.get(showcenterip+"/findAllInfo2/"+window.stations+"?tokena="+tokena)
+                    .then(data=>{
+                        $("#modal").css("display","block");
+                        var arrstation=[];
+                        var arrPointName=[];
+                        var arrdata=[];
+                        var arrlaste=[];
+                        console.log(data);
+                        arrstation=JSON.parse(data.data.sensorCfgInfo);
+                        console.log(arrstation);
+
+                        for(var i=0;i<arrstation.length;i++){
+                            arrdata[i] =arrstation[i].dataProName;
+                            arrPointName[i]=arrstation[i].pointName;
+
+                        }
+                        arrdata.push("+");
+                        console.log(arrPointName);
+                        var	number=arrstation.length/7;
+                        $("#sensorss").html("");
+                        var arrPoint=[];
+                        /* 使用js动态画出表格 */
+                        var strs=" ";
+                        strs = "<table class='am-table am-table-striped am-table-hover table-main am-table-bordered am-table-striped '>";
+                        for(var k=0;k<number;k++){
+                            arrlaste[k]=new Array();
+
+                            arrPoint[k]=new Array();
+                            strs += "<tr>";
+                            for(var j=0;j<7;j++){
+                                var m=k*7+j
+                                arrlaste[k][j]=arrdata[m];
+                                arrPoint[k][j]=arrPointName[m]
+                                //data为原数组
+                                if( arrlaste[k][j]==undefined){
+                                    arrlaste[k][j]="";
+                                    strs +="<td>"+arrlaste[k][j]+"</td>";
+                                }else if(arrPoint[k][j]==undefined){
+                                    strs +="<td class='sdd' >"+arrlaste[k][j]+"</td>";
+
+                                } else{
+                                    strs +="<td class='sdd' id='"+arrPoint[k][j]+"'>"+arrlaste[k][j]+"("+arrPoint[k][j]+")</td>";
+                                }
+                            }
+                            strs += "</tr>";
+                        }
+                        strs += "</table>";
+                        /*将表格放入html标签当中  */
+                        $("#sensorss").append(strs);
+                        /*对页面中的“+”进行样式的修改  */
+                        $('.sdd').eq(-1).css("font-size","27px");
+                        $('.sdd').eq(-1).css("padding","0px");
+                        /*  点击非空表格时执行的函数*/
+                        var textinput="";
+                        var textinputid="";
+                        $(".sdd").click(function(){
+
+                            textinput=$(this).text();
+                            textinputid=$(this).attr('id');
+                            console.log(textinputid);
+                            if(textinput=="+"){
+                                console.log("跳转到新建换热站页面");
+                            }else{
+                                $("#modal").css("display","none");
+
+                                obj.innerHTML += "<div id='nodeimg"+iconnum+"' class='nodediv' style='top:"+drawY*100+"%;left:"+drawX*100
+                                    +"%;'><span id='nodeicon"+iconnum+"'></span><p class='nodename' id='"+textinputid+"'>"+ textinput +"</p><b class='delnode' @click='DelNow'>删除</b></div>";
+                                var colorss=$("#sample").css("color");
+                                var sizess=$("#sample").css("font-size");
+                                var classss=$("#sample").attr("class");
+                                $("#nodeicon"+iconnum).attr("class",classss);
+                                $("#nodeicon"+iconnum).css("color",colorss);
+                                $("#nodeicon"+iconnum).css("font-size",sizess);
+                                var nodedivss=document.getElementsByClassName("nodediv");
+                                var fff=nodedivss.length;
+
+                                var aBox = obj.childNodes;
+                                var maxLeft = oimg.width - aBox[0].clientWidth;
+                                var maxTop = oimg.height - aBox[0].clientHeight;
+                                for(var i=0;i<fff;i++){
+                                    (function(mm){
+                                        nodedivss[mm].ondblclick = function(){
+
+                                            axios.get(showcenterip+"/findAllInfo2/"+window.stations+"?tokena="+tokena)
+                                                .then(data=>{
+                                                    $("#modal").css("display","block");
+                                                    var arrstation=[];
+                                                    var arrdata=[];
+                                                    var arrlaste=[];
+                                                    var arrPointName=[];
+                                                    var arrPoint=[];
+
+                                                    console.log(data);
+                                                    arrstation=JSON.parse(data.data.sensorCfgInfo);
+                                                    console.log(arrstation);
+
+                                                    for(var i=0;i<arrstation.length;i++){
+                                                        arrPointName[i]=arrstation[i].pointName;
+                                                        arrdata[i] =arrstation[i].dataProName;
+                                                    }
+                                                    arrdata.push("+");
+
+                                                    var	number=arrstation.length/7;
+                                                    $("#sensorss").html("");
+                                                    /* 使用js动态画出表格 */
+                                                    var strs=" ";
+                                                    strs = "<table class='am-table am-table-striped am-table-hover table-main am-table-bordered am-table-striped '>";
+                                                    for(var k=0;k<number;k++){
+                                                        arrlaste[k]=new Array();
+                                                        arrPoint[k]=new Array();
+                                                        strs += "<tr>";
+                                                        for(var j=0;j<7;j++){
+                                                            var m=k*7+j
+                                                            arrlaste[k][j]=arrdata[m];   //data为原数组
+                                                            arrPoint[k][j]=arrPointName[m]
+                                                            //data为原数组
+                                                            if( arrlaste[k][j]==undefined){
+                                                                arrlaste[k][j]="";
+                                                                strs +="<td>"+arrlaste[k][j]+"</td>";
+                                                            }else if(arrPoint[k][j]==undefined){
+                                                                strs +="<td class='sdd'>"+arrlaste[k][j]+"</td>";
+
+                                                            } else{
+                                                                strs +="<td class='sdd' id='"+arrPoint[k][j]+"'>"+arrlaste[k][j]+"("+arrPoint[k][j]+")</td>";
+                                                            }
+                                                        }
+                                                        strs += "</tr>";
+                                                    }
+                                                    strs += "</table>";
+                                                    /*将表格放入html标签当中  */
+                                                    $("#sensorss").append(strs);
+                                                    /*对页面中的“+”进行样式的修改  */
+                                                    $('.sdd').eq(-1).css("font-size","27px");
+                                                    $('.sdd').eq(-1).css("padding","0px");
+                                                    /*  点击非空表格时执行的函数*/
+
+                                                    $(".sdd").click(function(){
+                                                        var a=$(this).text();
+                                                        var f=$(this).attr('id');
+                                                        console.log(f);
+                                                        if(textinput=="+"){
+                                                            console.log("跳转到新建换热站页面");
+                                                        }else{
+                                                            $("#modal").css("display","none");
+                                                            console.log(nodedivss[mm].getElementsByTagName("p"));
+                                                            console.log(a);
+                                                            nodedivss[mm].getElementsByTagName("p")[0].innerHTML=a;
+                                                            nodedivss[mm].getElementsByTagName("p")[0].id=f;
+                                                        }
+
+                                                    })
+
+                                                })
+                                                .catch(function(){
+
+                                                    console.log("1");
+
+                                                })
+
+
+
+                                        }
+                                        nodedivss[mm].onmousedown = function (ev) {
+                                            var startX = this.offsetLeft;
+                                            var startY = this.offsetTop;
+                                            ev = ev || window.event;
+                                            var mStartX = ev.clientX;
+                                            var mStartY = ev.clientY;
+                                            /*鼠标移动时*/
+                                            document.onmousemove = function (ev) {
+                                                //禁止选中
+                                                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                                                ev = ev || window.event;
+                                                var mTargetX = ev.clientX;
+                                                var mTargetY = ev.clientY;
+                                                var deltaX = mTargetX - mStartX;
+                                                var deltaY = mTargetY - mStartY;
+
+                                                var left = startX + deltaX;
+                                                var top = startY + deltaY;
+
+                                                /*限定拖动所能达到的左、上位置，避免出界*/
+                                                left = Math.max(left, 0);
+                                                left = Math.min(left, maxLeft);
+
+                                                top = Math.max(top, 0);
+                                                top = Math.min(top, maxTop);
+                                                /*赋值定位数值*/
+                                                nodedivss[mm].style.left = left/oimg.width*100 + "%";
+                                                console.log(left/oimg.width)
+                                                nodedivss[mm].style.top = top/oimg.height*100 + "%";
+                                            }
+                                            /*鼠标点击过后清空移动状态*/
+                                            document.onmouseup = function () {
+                                                document.onmousemove = null;
+                                                /*console.log(nodedivss[mm]);*/
+                                            }
+                                        }
+
+                                    })(i);
+
+                                }
+                            }
+
+                        })
+
+                    })
+                    .catch(function(){
+
+                        console.log("1");
+
+                    })
+
+            }
+        }
+    }
+}
+/*********************************************************/
+console.log("执行文件");
+console.log(window.judge);
+if(window.judge=="judge1"){
+    console.log("aaa");
+
+    axios.get(showcenterip+"/findSendorNode.json/"+window.interfaceId+"?tokena="+tokena)
+        .then(data=>{
+            console.log("11");
+            datas=JSON.parse(data.data.sensorArr);
+            console.log(datas);
+            var obj=document.getElementById("savebox");
+            console.log(obj);
+            console.log(datas.length);
+            for(var a=0;a<datas.length;a++){
+                obj.innerHTML += "<div  class='nodediv' style='top:"+datas[a].nattureTop+";left:"+datas[a].nattureLeft
+                    +";'><span class='"+datas[a].natureClass+"' style='color:"+datas[a].natureColor+";font-size:"+datas[a].natureSize+"'></span><p class='nodename' id='"+datas[a].natureTextId+"'>"+ datas[a].natureText +"</p></div>";
+
+            }
+
+        })
+        .catch(function(){
+            console.log("00");
+        })
+}
+/*累加器，赋值节点ID用*/
+var iconnum = 0;
+/*判断是否处于显示节点名称状态。默认为false*/
+var showNot = false;
+/*判断是否处于可删除点状态。默认为false*/
+var delNot  = false;
+/*判断是否处于可画点状态。默认为true*/
+var drawNow = true;
+
+
+/*侧边导航栏所在*/
+var app =  new Vue({
+    el:'#app',
+    components:{
+        myedit:MyFooterEdit,
+        myreplace:MyFooterReplace,
+        myfooter:MyFooter,
+        myheader:MyHeader
+    }
+});
+console.log(app);
