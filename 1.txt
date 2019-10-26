@@ -415,6 +415,7 @@ data-am-modal-close value="返回" />
             }else{
                 alert("加载错误请重试");
             }
+            $("#updateuserinfoReaple").hide();
         },
 
         /* 更换背景图片的返回按钮*/
@@ -425,53 +426,56 @@ data-am-modal-close value="返回" />
 }
 /*************************************************************/
 // Vue.component('my-footer', MyFooter);
-
+var maxtime;
 var MyFooter={
     template:`<div> 
-            <ul class="ull"> 
-        	<MFreplace></MFreplace>
-        	<MFEdit></MFEdit>
-            <li class="lii">
-                <a id="eye" class="tubiao" @click="showNodes"  style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:100px;" title="点击隐藏/显示数据项目名">
-                    <img src="assets/img/eye.png" width="50" height="50"/>
-           		</a>
-           </li>
-           <li class="lii">
-                <a id="eye" class="tubiao" @click="DelNodes" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:200px;" title="删除节点">
-                    <img src='assets/img/del.png' width="50" height="50" style="padding:2px"/>
-                    
-                    
-           		</a>
-           </li>
-           <li class="lii">
-           	<img src="assets/img/save1.png" height="48" @click="natureSave"  width="48" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:150px;" title="保存" />
-           	<div class="savedown" style="position: fixed;left: 97%;top: 400px;" @click="addSave"></div>
-          <!-- 自动保存弹框-->
-           	<div id="myModal2" class="modal" style="height:0;left:25%;position: fixed;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>自动保存设置</h2>
-                        <span id="closeBtn2" class="close" @click="closeWin">×</span>
+                <ul class="ull"> 
+                <MFreplace></MFreplace>
+                <MFEdit></MFEdit>
+                <li class="lii">
+                    <a id="eye" class="tubiao" @click="showNodes"  style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:100px;" title="点击隐藏/显示数据项目名">
+                        <img src="assets/img/eye.png" width="50" height="50"/>
+                    </a>
+               </li>
+               <li class="lii">
+                    <a id="eye" class="tubiao" @click="DelNodes" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:200px;" title="删除节点">
+                        <img src='assets/img/del.png' width="50" height="50" style="padding:2px"/>
+                        
+                        
+                    </a>
+               </li>
+               <li class="lii">
+                <img src="assets/img/save1.png" height="48" @click="natureSave"  width="48" style="position: fixed;right: 30px;top: 150px;z-index:1000;margin-top:150px;" title="保存" />
+                <div class="savedown" style="position: fixed;left: 97%;top: 400px;" @click="addSave"></div>
+              <!-- 自动保存弹框-->
+                <div id="myModal2" class="modal" style="height:0;left:25%;position: fixed;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>自动保存设置</h2>
+                            <span id="closeBtn2" class="close" @click="closeWin">×</span>
+                        </div>
+                        <div class="modal-body">  
+                        <form action="/demo/demo_form.asp">
+                       <!-- 启动/关闭自动保存:
+                         &nbsp;启动<input type="radio" checked="checked" name="savee" value="saveon" style="margin-left:3px;" @click="open" />
+                        &nbsp;关闭<input type="radio" name="savee" value="saveon"  style="margin-left:3px;" @click="closeTime()" />-->
+                        <br><br>
+                        保存间隔时间:
+                        <input type="text" name="lastname" id="timeinput" style="border:1px solid #CCC;width:50px;border-radius: 5px;height: 25px;">分钟
+                        <br><br>
+                        <input type="button" value="设置"  @click="CountDown()">
+                        <input type="button" value="关闭"  @click="closeTime()">
+                        <div id="timer"></div>
+                        </form> 
+                        <p>上次保存时间：<input id="saveTime" v-text="Date()" value="暂未保存"  style="width:182px"></input> </p>
                     </div>
-                    <div class="modal-body">  
-                	<form action="/demo/demo_form.asp">
-					启动/关闭自动保存:
-					&nbsp;启动<input type="radio" checked="checked" name="savee" value="saveon" style="margin-left:3px;"/>
-					&nbsp;关闭<input type="radio" name="savee" value="saveon"  style="margin-left:3px;"/>
-					<br><br>
-					保存间隔时间:
-					<input type="text" name="lastname" value="2" style="border:1px solid #CCC;width:50px;border-radius: 5px;height: 25px;">分钟
-					<br><br>
-					<input type="submit" value="设置" @click="submitSave">
-					</form> 
-					<p>上次保存时间：2019.3.24</p>
                 </div>
-            </div>
-            </div>
-           	</li>
- 	     </ul> 
+                </div>
+                </li>
+             </ul> 
             </div>
                 `,
+
     methods:{
         closeWin:function(e){
             var modalBox = {};
@@ -585,75 +589,101 @@ var MyFooter={
                     console.log(111);
                 })
                 .catch(function(response){
-                    console.log(0);
+                    console.log(000);
                 });
-
+            document.getElementById("saveTime").value=Date();
             alert("你已保存成功！");
         },
 
+
         /*定时保存页面的数据*/
 
-        submitSave:function(e){
-            event.preventDefault();
-            let formData = new FormData();
-            var dataItem = [];
+        CountDown:function(){
+            clearInterval(timer);
+            maxtime=document.getElementById("timeinput").value*60;
+            timer = setInterval(function(){
+                if (maxtime > 0) {
+//			        					console.log(maxtime);
+                    minutes = Math.floor(maxtime / 60);
+                    seconds = Math.floor(maxtime % 60);
+                    /* msg = "距离结束还有" + minutes + "分" + seconds + "秒";
+                    document.all["timer"].innerHTML = msg; */
+                    --maxtime;
+                }
+                else if(maxtime == 0){
+                    var a=document.getElementById("timeinput").value;
+                    maxtime=a*60;
+//			        					console.log('0');
+                    let formData = new FormData();
+                    var dataItem = [];
 
-            var arrdatas = document.getElementsByClassName("nodediv");
+                    var arrdatas = document.getElementsByClassName("nodediv");
 
-            for(var i=0;i<arrdatas.length;i++){
+                    for(var i=0;i<arrdatas.length;i++){
 
-                var natureID = arrdatas[i].getElementsByTagName("span")[0].getAttribute("id");
-                var natureClass = arrdatas[i].getElementsByTagName("span")[0].getAttribute("class");
-                var natureSize = arrdatas[i].getElementsByTagName("span")[0].style.fontSize;
-                var natureColor = arrdatas[i].getElementsByTagName("span")[0].style.color;
-                var natureText = arrdatas[i].getElementsByTagName("p")[0].innerHTML;
-                var natureTextId = arrdatas[i].getElementsByTagName("p")[0].id;
-                console.log(natureID);
-                console.log(natureClass);
-                console.log(natureSize);
-                console.log(natureColor);
-                var nattureTop = arrdatas[i].style.top;
-                console.log(nattureTop);
-                var nattureLeft = arrdatas[i].style.left;
-                console.log(nattureLeft);
-                var ObjectAttribute={}
-                ObjectAttribute.natureID=natureID;
-                ObjectAttribute.natureClass=natureClass
-                ObjectAttribute.natureSize=natureSize;
-                ObjectAttribute.natureColor=natureColor;
-                ObjectAttribute.natureText=natureText;
-                ObjectAttribute.nattureTop=nattureTop;
-                ObjectAttribute.nattureLeft=nattureLeft;
-                ObjectAttribute.natureTextId=natureTextId;
-                dataItem.push(ObjectAttribute);
-            }
-            console.log(dataItem);
-            JSON.stringify( dataItem );
-            var interfaceID=window.interfaceId;
-            console.log(interfaceID);
-            console.log(typeof interfaceID);
-            axios({
-                url:showcenterip+"/saveSensorArr.json?tokena="+tokena,
-                method:"post",
-                data:{
-                    "sensorNode":JSON.stringify(dataItem),
-                    "interfaceId": interfaceID
-                },
+                        var natureID = arrdatas[i].getElementsByTagName("span")[0].getAttribute("id");
+                        var natureClass = arrdatas[i].getElementsByTagName("span")[0].getAttribute("class");
+                        var natureSize = arrdatas[i].getElementsByTagName("span")[0].style.fontSize;
+                        var natureColor = arrdatas[i].getElementsByTagName("span")[0].style.color;
+                        var natureText = arrdatas[i].getElementsByTagName("p")[0].innerHTML;
+                        var natureTextId = arrdatas[i].getElementsByTagName("p")[0].id;
+                        console.log(natureID);
+                        console.log(natureClass);
+                        console.log(natureSize);
+                        console.log(natureColor);
+                        var nattureTop = arrdatas[i].style.top;
+                        console.log(nattureTop);
+                        var nattureLeft = arrdatas[i].style.left;
+                        console.log(nattureLeft);
+                        var ObjectAttribute={}
+                        ObjectAttribute.natureID=natureID;
+                        ObjectAttribute.natureClass=natureClass
+                        ObjectAttribute.natureSize=natureSize;
+                        ObjectAttribute.natureColor=natureColor;
+                        ObjectAttribute.natureText=natureText;
+                        ObjectAttribute.nattureTop=nattureTop;
+                        ObjectAttribute.nattureLeft=nattureLeft;
+                        ObjectAttribute.natureTextId=natureTextId;
+                        dataItem.push(ObjectAttribute);
+                    }
+                    console.log(dataItem);
+                    JSON.stringify( dataItem );
+                    var interfaceID=window.interfaceId;
+                    axios({
+                        url:showcenterip+"/saveSensorArr.json?tokena="+tokena,
+                        method:"post",
+                        data:{
+                            "sensorNode":JSON.stringify(dataItem),
+                            "interfaceId": interfaceID
+                        },
 
-            })
-                .then(function(response){
-                    console.log(111);
-                })
-                .catch(function(response){
-                    console.log(000);
-                })
+                    })
+                        .then(function(response){
+                            console.log(111);
+                        })
+                        .catch(function(response){
+                            console.log(000);
+                        });
+                    document.getElementById("saveTime").value=Date();
+//			       	              		  console.log("保存成功！");
+                }
+                else{
+                    clearInterval(timer);
+                }
 
-            $("#myModal2").hide();
-
-            alert("你已开始进行定时保存！");
-
+            }, 1000);
+            let a=document.getElementById("timeinput").value;
         },
 
+
+
+        /*关闭定时保存*/
+        open:function(e){
+//	               	    	clearInterval(timer);
+        },
+        closeTime:function(){
+            clearInterval(timer);
+        }
     }
 }
 /**************************************************/
@@ -1028,6 +1058,12 @@ var drawNow = true;
 /*侧边导航栏所在*/
 var app =  new Vue({
     el:'#app',
+    data:function(){
+        return{
+            maxtime:1,
+            aaa:2
+        }
+    },
     components:{
         myedit:MyFooterEdit,
         myreplace:MyFooterReplace,
